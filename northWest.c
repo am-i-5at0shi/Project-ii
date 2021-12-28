@@ -8,7 +8,7 @@ int main(){
     scanf("%d",&no_supply_points);
     int supply_point[no_supply_points];
     for(int i=0;i<no_supply_points;i++){
-        printf("Enter availabality at supply point-%d: ",i+1);
+        printf("Enter availabality at supply point %d: ",i+1);
         scanf("%d",(supply_point+i));
     }
 
@@ -16,17 +16,24 @@ int main(){
     scanf("%d",&no_demand_points);
     int demand_point[no_demand_points];
     for(int i=0;i<no_demand_points;i++){
-        printf("Enter demand at demand point-%d: ",i+1);
+        printf("Enter demand at demand point %d: ",i+1);
         scanf("%d",(demand_point+i));
     }
 
-    int weight[no_supply_points][no_demand_points],distribution[no_supply_points][no_demand_points];
+    int weight[no_supply_points][no_demand_points];
+    int distribution[no_supply_points][no_demand_points];
     for(int i=0;i<no_supply_points;i++){
         for(int j=0;j<no_demand_points;j++){
-            printf("Enter per unit transportation expense from supply point-%d to demand point-%d: ",i+1, j+1);
+            printf("Enter per unit transportation expense from supply point %d to demand point %d: ",i+1, j+1);
             scanf("%d",&weight[i][j]);
         }
     }
+
+    for(int i=0;i<no_supply_points;i++)
+        for(int j=0;j<no_demand_points;j++)
+            distribution[i][j]=0;
+
+
 
     for(int i=0;i<no_supply_points;i++){
         if(supply_point[i]==0){
@@ -37,6 +44,7 @@ int main(){
                 continue;
             }
             int temp = demand_point[j] < supply_point[i] ? demand_point[j] : supply_point[i];
+            distribution[i][j] = temp;
             demand_point[j] -= temp;
             supply_point[i] -= temp;
             total_cost += weight[i][j]*temp;
@@ -44,6 +52,14 @@ int main(){
         }
     }
 
-    printf("Total cost occured: %d", total_cost);
+    printf(">>> Total cost occured: %d\n\nDistribution Matrix: \n", total_cost);
+
+    for(int i=0;i<no_supply_points;i++){
+        for(int j=0;j<no_demand_points;j++){
+            printf("%d ",distribution[i][j]);
+        }
+        printf("\n");
+    }
+
 
 }

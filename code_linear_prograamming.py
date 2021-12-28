@@ -5,7 +5,6 @@ y = LpVariable(name="y", lowBound=0)
 model += (2 * x +  y <= 20, "red_constraint")
 model += ((-4) * x + 5 * y <= 10, "blue_constraint")
 model += (-x + 2 * y >= -2, "yellow_constraint")
-#model += (-x + 5 * y == 15, "green_constraint")
 obj_func = x + 2 * y
 model += obj_func
 status = model.solve()
